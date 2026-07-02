@@ -1,0 +1,55 @@
+services:
+  balancer:
+    build:
+      context: ..
+      dockerfile: deploy/balancer.Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - BALANCER_PORT=8080
+      - STRATEGY=LEAST_CONN
+      #- STRATEGY=ROUND_ROBIN
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+
+  backend1:
+    build:
+      context: ..
+      dockerfile: deploy/worker.Dockerfile
+    environment:
+      - WORKER_PORT=8000
+      - DELAY_MULTIPLIER=5
+    expose:
+      - "8000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+
+  backend2:
+    build:
+      context: ..
+      dockerfile: deploy/worker.Dockerfile
+    environment:
+      - WORKER_PORT=8000
+    expose:
+      - "8000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+
+  backend3:
+    build:
+      context: ..
+      dockerfile: deploy/worker.Dockerfile
+    environment:
+      - WORKER_PORT=8000
+    expose:
+      - "8000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
