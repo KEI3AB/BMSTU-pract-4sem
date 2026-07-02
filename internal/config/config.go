@@ -16,12 +16,9 @@ type Config struct {
 
 func Load() *Config {
 	return &Config{
-		BalancerPort:       getEnv("BALANCER_PORT", "8080"),
-		WorkerPort:         getEnv("WORKER_PORT", "8000"),
-		Strategy:           getEnv("STRATEGY", "LEAST_CONN"),
-		LoadGenTarget:      getEnv("LOADGEN_TARGET", "http://localhost:8080"),
-		LoadGenConcurrency: getEnvAsInt("LOADGEN_CONCURRENCY", 50),
-		LoadGenRequests:    getEnvAsInt("LOADGEN_REQUESTS", 500),
+		BalancerPort: getEnv("BALANCER_PORT", "8080"),
+		WorkerPort:   getEnv("WORKER_PORT", "8000"),
+		Strategy:     getEnv("STRATEGY", "LEAST_CONN"),
 	}
 }
 
